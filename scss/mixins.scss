@@ -1,0 +1,63 @@
+@mixin banner{
+    position:relative;
+    width:100%;
+    color: white;
+
+    .banner-content{
+      position: absolute;
+      top:50px;
+      width:100%;
+    }
+    img{
+       width: 100%
+    }
+    span{
+        font-size:$bannerHeading;
+        display: block;
+        font-weight: bold;
+        text-transform: uppercase;
+        @include mQ(3000px,1200px){ //from 1220px and till 3000px font-sise will be this...
+            font-size:60px
+        }
+    }
+    span.title{
+        font-weight: normal;
+        margin-bottom: 30px;
+    }
+
+
+}
+
+@mixin clearfix{  //pseudo can be created as mixin
+    &:after{
+        content: "";
+        clear: both;
+        display: block;
+    }
+}
+
+@mixin grid($cols, $mgn){
+    float: left;
+    width: ((100% - (($cols - 1) * $mgn)) / $cols );//whole width is subtracted from n-1 elemnts rigth margin then remaining divided amonag all n elements
+    margin-right: $mgn;
+    margin-bottom: $mgn;
+    &:nth-child(#{$cols}n){//nth without margin-right
+      margin-right: 0;
+    }
+  }
+
+  @mixin mQ($arg...){  //pseudo can be created as mixin
+    @if length($arg)==1{
+        @media screen and (max-width:nth($arg,1)){
+            @content;
+        }
+
+    }
+    @if length($arg)==2{
+        @media screen and (max-width:nth($arg,1)) and (min-width:nth($arg,2) ){
+            @content;
+        }
+
+    }
+ 
+}
